@@ -1,70 +1,94 @@
-# Getting Started with Create React App
+# React OAuth2 Integration with Authaction
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a React application demonstrating how to integrate OAuth2 authentication using [AuthAction](https://app.authaction.com/) with the `react-oidc-context` library.
 
-## Available Scripts
+## Overview
 
-In the project directory, you can run:
+This application showcases how to configure and handle authentication and logout using Authaction’s OAuth2 service. The setup includes:
 
-### `npm start`
+- Redirecting users to the login page.
+- Handling successful authentication and displaying user information.
+- Logging out users and redirecting them to the specified logout URL.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Prerequisites
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Before using this application, ensure you have:
 
-### `npm test`
+1. **Node.js and npm installed**: You can download and install them from [nodejs.org](https://nodejs.org/).
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+2. **Authaction OAuth2 credentials**: You will need to have the `tenantDomain`, `clientId`, and relevant URIs from your Authaction setup.
 
-### `npm run build`
+## Installation
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. **Clone the repository** (if applicable):
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+   ```bash
+   git clone git@github.com:authaction/authaction-react-example.git
+   cd authaction-react-example
+   ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+2. **Install dependencies**:
 
-### `npm run eject`
+   ```bash
+   npm install
+   ```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+3. **Configure your Authaction credentials**:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+   Edit `src/config.json` and replace the placeholders with your Authaction OAuth2 details:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+   ```json
+   {
+     "tenantDomain": "your-tenant-domain",
+     "clientId": "your-client-id",
+     "redirectUri": "http://localhost:3000/",
+     "logoutRedirectUri": "http://localhost:3000/"
+   }
+   ```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Usage
 
-## Learn More
+1. **Start the development server**:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+   ```bash
+   npm start
+   ```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+   This will start the React application on `http://localhost:3000`.
 
-### Code Splitting
+2. **Testing Authentication**:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+   - Open your browser and navigate to `http://localhost:3000`.
+   - Click the "Login" button to be redirected to the Authaction login page.
+   - After successful login, you will be redirected back to the application with a welcome message showing your email and a "Logout" button.
+   - Click the "Logout" button to be logged out and redirected to the specified logout URL.
 
-### Analyzing the Bundle Size
+## Code Explanation
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### Configuration (`src/index.js`)
 
-### Making a Progressive Web App
+- **AuthProvider Setup**:
+  - Configures the OAuth2 authentication using `react-oidc-context`.
+  - Sets up `authority`, `client_id`, `redirect_uri`, and `post_logout_redirect_uri` based on the credentials from `config.json`.
+  - `onSigninCallback` handles the cleanup of the URL after the sign-in callback.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### Application Component (`src/App.js`)
 
-### Advanced Configuration
+- **Login and Logout Handling**:
+  - `handleLogin` triggers a redirect to the Authaction login page.
+  - `handleLogout` triggers a redirect to the Authaction logout page.
+  - The application conditionally displays a welcome message and logout button if the user is authenticated. Otherwise, it shows a login button.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Common Issues
 
-### Deployment
+- **Redirects not working**:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+  - Ensure that the `redirectUri` and `logoutRedirectUri` match the URIs configured in your [AuthAction](https://app.authaction.com/) application settings.
+  - Make sure the application is running on the same port as specified in the `redirectUri`.
 
-### `npm run build` fails to minify
+- **Network Errors**:
+  - Verify that your network allows traffic to the Authaction servers and that there are no firewall rules blocking the OAuth2 redirects.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Contributing
+
+Feel free to submit issues or pull requests if you find any bugs or have improvements to suggest.
