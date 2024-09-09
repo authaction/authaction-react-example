@@ -1,4 +1,4 @@
-# React OAuth2 Integration with Authaction
+# React OAuth2 Integration with AuthAction
 
 This is a React application demonstrating how to integrate OAuth2 authentication using [AuthAction](https://app.authaction.com/) with the `react-oidc-context` library.
 
