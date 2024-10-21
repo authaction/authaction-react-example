@@ -35,15 +35,13 @@ Before using this application, ensure you have:
 
 3. **Configure your Authaction credentials**:
 
-   Edit `src/config.json` and replace the placeholders with your Authaction OAuth2 details:
+   configure your AuthAction OAuth2 details using environment variables in your .env file
 
-   ```json
-   {
-     "tenantDomain": "your-tenant-domain",
-     "clientId": "your-client-id",
-     "redirectUri": "http://localhost:3000/",
-     "logoutRedirectUri": "http://localhost:3000/"
-   }
+   ```bash
+   REACT_APP_AUTHACTION_TENANT_DOMAIN=your-authaction-tenant-domain
+   REACT_APP_AUTHACTION_CLIENT_ID=your-authaction-app-clientid
+   REACT_APP_AUTHACTION_REDIRECT_URI=http://localhost:3000/
+   REACT_APP_AUTHACTION_LOGOUT_REDIRECT_URI=http://localhost:3000/
    ```
 
 ## Usage
