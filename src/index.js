@@ -3,18 +3,20 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import AuthConfig from "./config.json";
 import { AuthProvider } from "react-oidc-context";
 
 const oidcConfig = {
-  authority: `https://${AuthConfig.tenantDomain}`,
-  client_id: AuthConfig.clientId,
-  redirect_uri: AuthConfig.redirectUri,
-  post_logout_redirect_uri: AuthConfig.logoutRedirectUri,
+  authority: `https://${process.env.REACT_APP_AUTHACTION_TENANT_DOMAIN}`,
+  client_id: process.env.REACT_APP_AUTHACTION_CLIENT_ID,
+  redirect_uri: process.env.REACT_APP_AUTHACTION_REDIRECT_URI,
+  post_logout_redirect_uri:
+    process.env.REACT_APP_AUTHACTION_LOGOUT_REDIRECT_URI,
   onSigninCallback: () => {
     window.history.replaceState({}, document.title, window.location.pathname);
   },
 };
+
+console.log("oidcConfig", oidcConfig);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
