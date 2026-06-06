@@ -1,30 +1,28 @@
 import logo from "./logo.svg";
 import "./App.css";
-import { useAuth } from "react-oidc-context";
-import { jwtDecode } from "jwt-decode";
+import { useAuthAction } from "@authaction/web-sdk/react";
 
 function App() {
-  const auth = useAuth();
+  const { isAuthenticated, isLoading, user, loginWithRedirect, logout } =
+    useAuthAction();
 
-  const handleLogin = () => {
-    void auth.signinRedirect();
-  };
-
-  const handleLogout = () => {
-    void auth.signoutRedirect();
-  };
-
-  const decodedIdToken = auth.isAuthenticated
-    ? jwtDecode(auth.user.id_token)
-    : null;
+  if (isLoading) {
+    return (
+      <div className="App">
+        <header className="App-header">
+          <p>Loading...</p>
+        </header>
+      </div>
+    );
+  }
 
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        {auth.isAuthenticated ? (
+        {isAuthenticated ? (
           <>
-            <p>Welcome, {auth.user.profile.name}</p>
+            <p>Welcome, {user?.name}</p>
             <div>
               <textarea
                 style={{
@@ -42,15 +40,15 @@ function App() {
                   overflow: "auto",
                 }}
                 readOnly
-                value={JSON.stringify(decodedIdToken, null, 2)}
-              ></textarea>
+                value={JSON.stringify(user, null, 2)}
+              />
             </div>
-            <button className="App-link" onClick={handleLogout}>
+            <button className="App-link" onClick={() => logout()}>
               Logout
             </button>
           </>
         ) : (
-          <button className="App-link" onClick={handleLogin}>
+          <button className="App-link" onClick={() => loginWithRedirect()}>
             Login
           </button>
         )}
