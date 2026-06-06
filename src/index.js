@@ -12,6 +12,7 @@ root.render(
       domain={process.env.REACT_APP_AUTHACTION_DOMAIN}
       clientId={process.env.REACT_APP_AUTHACTION_CLIENT_ID}
       redirectUri={process.env.REACT_APP_AUTHACTION_REDIRECT_URI}
+      postLogoutRedirectUri={process.env.REACT_APP_AUTHACTION_LOGOUT_REDIRECT_URI}
     >
       <App />
     </AuthActionProvider>
