@@ -1,10 +1,10 @@
 # React OAuth2 Integration with AuthAction
 
-This is a React application demonstrating how to integrate OAuth2 authentication using [AuthAction](https://app.authaction.com/) with the `react-oidc-context` library.
+This is a React application demonstrating how to integrate OAuth2 authentication using [AuthAction](https://app.authaction.com/) with the `@authaction/web-sdk` library.
 
 ## Overview
 
-This application showcases how to configure and handle authentication and logout using Authaction’s OAuth2 service. The setup includes:
+This application showcases how to configure and handle authentication and logout using AuthAction's OAuth2 service. The setup includes:
 
 - Redirecting users to the login page.
 - Handling successful authentication and displaying user information.
@@ -16,11 +16,11 @@ Before using this application, ensure you have:
 
 1. **Node.js and npm installed**: You can download and install them from [nodejs.org](https://nodejs.org/).
 
-2. **Authaction OAuth2 credentials**: You will need to have the `tenantDomain`, `clientId`, and relevant URIs from your Authaction setup.
+2. **AuthAction OAuth2 credentials**: You will need the `tenantDomain`, `clientId`, and relevant URIs from your AuthAction setup.
 
 ## Installation
 
-1. **Clone the repository** (if applicable):
+1. **Clone the repository**:
 
    ```bash
    git clone git@github.com:authaction/authaction-react-example.git
@@ -33,9 +33,9 @@ Before using this application, ensure you have:
    npm install
    ```
 
-3. **Configure your Authaction credentials**:
+3. **Configure your AuthAction credentials**:
 
-   configure your AuthAction OAuth2 details using environment variables in your .env file
+   Create a `.env` file in the project root:
 
    ```bash
    REACT_APP_AUTHACTION_TENANT_DOMAIN=your-authaction-tenant-domain
@@ -57,35 +57,61 @@ Before using this application, ensure you have:
 2. **Testing Authentication**:
 
    - Open your browser and navigate to `http://localhost:3000`.
-   - Click the "Login" button to be redirected to the Authaction login page.
-   - After successful login, you will be redirected back to the application with a welcome message showing your email and a "Logout" button.
+   - Click the "Login" button to be redirected to the AuthAction login page.
+   - After successful login, you will be redirected back to the application with a welcome message showing your name and profile details.
    - Click the "Logout" button to be logged out and redirected to the specified logout URL.
 
 ## Code Explanation
 
-### Configuration (`src/index.js`)
+### Entry point (`src/index.js`)
 
-- **AuthProvider Setup**:
-  - Configures the OAuth2 authentication using `react-oidc-context`.
-  - Sets up `authority`, `client_id`, `redirect_uri`, and `post_logout_redirect_uri` based on the credentials from `config.json`.
-  - `onSigninCallback` handles the cleanup of the URL after the sign-in callback.
+Wraps the app with `AuthActionProvider`, passing your tenant domain, client ID, and redirect URIs:
+
+```jsx
+import { AuthActionProvider } from '@authaction/web-sdk/react';
+
+<AuthActionProvider
+  domain={process.env.REACT_APP_AUTHACTION_TENANT_DOMAIN}
+  clientId={process.env.REACT_APP_AUTHACTION_CLIENT_ID}
+  redirectUri={process.env.REACT_APP_AUTHACTION_REDIRECT_URI}
+  postLogoutRedirectUri={process.env.REACT_APP_AUTHACTION_LOGOUT_REDIRECT_URI}
+>
+  <App />
+</AuthActionProvider>
+```
 
 ### Application Component (`src/App.js`)
 
-- **Login and Logout Handling**:
-  - `handleLogin` triggers a redirect to the Authaction login page.
-  - `handleLogout` triggers a redirect to the Authaction logout page.
-  - The application conditionally displays a welcome message and logout button if the user is authenticated. Otherwise, it shows a login button.
+Uses the `useAuthAction` hook to read auth state and trigger login/logout:
+
+```jsx
+import { useAuthAction } from '@authaction/web-sdk/react';
+
+function App() {
+  const { isLoading, isAuthenticated, user, loginWithRedirect, logout } = useAuthAction();
+
+  if (isLoading) return <p>Loading...</p>;
+
+  return isAuthenticated ? (
+    <>
+      <p>Welcome, {user?.name}</p>
+      <button onClick={() => logout()}>Logout</button>
+    </>
+  ) : (
+    <button onClick={() => loginWithRedirect()}>Login</button>
+  );
+}
+```
 
 ## Common Issues
 
 - **Redirects not working**:
 
-  - Ensure that the `redirectUri` and `logoutRedirectUri` match the URIs configured in your [AuthAction](https://app.authaction.com/) application settings.
+  - Ensure that the `redirectUri` and `postLogoutRedirectUri` match the URIs configured in your [AuthAction](https://app.authaction.com/) application settings.
   - Make sure the application is running on the same port as specified in the `redirectUri`.
 
 - **Network Errors**:
-  - Verify that your network allows traffic to the Authaction servers and that there are no firewall rules blocking the OAuth2 redirects.
+  - Verify that your network allows traffic to the AuthAction servers and that there are no firewall rules blocking the OAuth2 redirects.
 
 ## Contributing
 
