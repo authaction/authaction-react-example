@@ -35,7 +35,11 @@ function UserProfile({ user, onLogout }) {
         </dl>
         <details className="raw-token">
           <summary>Raw claims</summary>
-          <pre className="raw-token-content">{JSON.stringify(user, null, 2)}</pre>
+          <pre className="raw-token-content">{JSON.stringify(
+            (({ access_token, profile, ...claims }) => claims)(user ?? {}),
+            null,
+            2,
+          )}</pre>
         </details>
       </div>
       <div className="card-footer">
