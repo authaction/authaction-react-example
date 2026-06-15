@@ -33,6 +33,7 @@ function Navbar({ authenticated, onLogin, onSignup, onLogout }) {
           </button>
         ) : (
           <>
+            <span className="demo-badge">Demo App</span>
             <button className="btn btn-ghost" onClick={onLogin}>
               Log in
             </button>
@@ -101,7 +102,7 @@ export default function App() {
   if (isLoading) return <LoadingScreen />;
 
   const onLogin = () => loginWithRedirect();
-  const onSignup = () => loginWithRedirect({ screen_hint: "signup" });
+  const onSignup = () => loginWithRedirect({ authorizationParams: { screen_hint: "signup" } });
 
   return (
     <div className="app">

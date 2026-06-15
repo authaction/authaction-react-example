@@ -90,6 +90,17 @@ body {
   gap: 8px;
 }
 
+.demo-badge {
+  font-size: 11px;
+  font-weight: 600;
+  color: #92400e;
+  background: #fef3c7;
+  border: 1px solid #fcd34d;
+  padding: 3px 8px;
+  border-radius: 20px;
+  letter-spacing: 0.02em;
+}
+
 /* Home / Hero */
 
 .home-page {
