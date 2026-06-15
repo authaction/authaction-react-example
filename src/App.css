@@ -37,14 +37,6 @@ body {
   flex-direction: column;
 }
 
-.main {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 24px 16px;
-}
-
 .screen-center {
   min-height: 100vh;
   display: flex;
@@ -52,186 +44,144 @@ body {
   justify-content: center;
 }
 
-/* Card */
+/* Navbar */
 
-.card {
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  height: 60px;
   background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-card);
-  box-shadow: var(--shadow-card);
-  width: 100%;
-  max-width: 480px;
-  overflow: hidden;
-}
-
-.card-centered {
-  text-align: center;
-  padding: 48px 40px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-}
-
-.card-header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 32px 32px 24px;
   border-bottom: 1px solid var(--color-border);
-  gap: 8px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
-.card-body {
-  padding: 24px 32px;
-}
-
-.card-footer {
-  padding: 16px 32px 28px;
-  display: flex;
-  justify-content: center;
-}
-
-/* Avatar */
-
-.avatar,
-.avatar-placeholder {
-  width: 72px;
-  height: 72px;
-  border-radius: 50%;
-  margin-bottom: 4px;
-}
-
-.avatar {
-  object-fit: cover;
-  border: 2px solid var(--color-border);
-}
-
-.avatar-placeholder {
-  background-color: var(--color-avatar-bg);
-  color: var(--color-avatar-text);
+.navbar-brand {
   display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: 28px;
-  font-weight: 600;
+  gap: 10px;
 }
 
-/* Profile */
-
-.profile-name {
-  margin: 0;
-  font-size: 20px;
-  font-weight: 600;
-  color: var(--color-text);
-}
-
-.profile-email {
-  margin: 0;
-  font-size: 14px;
-  color: var(--color-text-muted);
-}
-
-.section-title {
-  margin: 0 0 16px;
-  font-size: 13px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--color-text-muted);
-}
-
-/* Info list */
-
-.info-list {
-  margin: 0 0 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.info-row {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.info-label {
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--color-text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
-.info-value {
-  font-size: 14px;
-  color: var(--color-text);
-  word-break: break-all;
-}
-
-/* Raw token */
-
-.raw-token {
-  border: 1px solid var(--color-border);
+.brand-icon-sm {
+  width: 32px;
+  height: 32px;
   border-radius: 8px;
-  overflow: hidden;
-}
-
-.raw-token summary {
-  padding: 10px 14px;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--color-text-muted);
-  cursor: pointer;
-  user-select: none;
-  background: var(--color-raw-bg);
-}
-
-.raw-token summary:hover {
-  color: var(--color-text);
-}
-
-.raw-token-content {
-  margin: 0;
-  padding: 14px;
-  font-family: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas,
-    "Courier New", monospace;
-  font-size: 12px;
-  line-height: 1.6;
-  color: var(--color-text);
-  background: var(--color-raw-bg);
-  overflow-x: auto;
-  border-top: 1px solid var(--color-border);
-}
-
-/* Brand icon */
-
-.brand-icon {
-  width: 56px;
-  height: 56px;
-  border-radius: 14px;
   background: var(--color-primary);
   color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 26px;
+  font-size: 15px;
   font-weight: 700;
-  margin-bottom: 8px;
 }
 
-.login-title {
-  margin: 0;
-  font-size: 22px;
+.navbar-title {
+  font-size: 16px;
   font-weight: 700;
   color: var(--color-text);
 }
 
-.login-subtitle {
-  margin: 0 0 8px;
-  font-size: 14px;
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Home / Hero */
+
+.home-page {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.hero {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 80px 24px;
+}
+
+.hero-eyebrow {
+  margin: 0 0 16px;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-primary);
+}
+
+.hero-title {
+  margin: 0 0 20px;
+  font-size: clamp(32px, 5vw, 52px);
+  font-weight: 800;
+  line-height: 1.15;
+  color: var(--color-text);
+  max-width: 640px;
+}
+
+.hero-subtitle {
+  margin: 0 0 40px;
+  font-size: 17px;
+  line-height: 1.6;
   color: var(--color-text-muted);
+  max-width: 480px;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Raw Claims page */
+
+.claims-main {
+  flex: 1;
+  padding: 40px 24px;
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.claims-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+.claims-title {
+  margin: 0;
+  padding: 20px 24px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-raw-bg);
+}
+
+.claims-content {
+  margin: 0;
+  padding: 24px;
+  font-family: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas,
+    "Courier New", monospace;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--color-text);
+  background: var(--color-surface);
+  overflow-x: auto;
+  white-space: pre;
 }
 
 /* Buttons */
@@ -253,8 +203,6 @@ body {
 .btn-primary {
   background-color: var(--color-primary);
   color: #ffffff;
-  width: 100%;
-  padding: 12px;
 }
 
 .btn-primary:hover {
@@ -263,13 +211,36 @@ body {
 
 .btn-outline {
   background-color: transparent;
-  color: var(--color-text-muted);
+  color: var(--color-text);
   border: 1px solid var(--color-border);
 }
 
 .btn-outline:hover {
   border-color: #cbd5e0;
+  background-color: var(--color-bg);
+}
+
+.btn-ghost {
+  background-color: transparent;
+  color: var(--color-text-muted);
+  border: none;
+  padding: 8px 16px;
+}
+
+.btn-ghost:hover {
   color: var(--color-text);
+  background-color: var(--color-bg);
+  border-radius: var(--radius-btn);
+}
+
+.btn-sm {
+  padding: 7px 16px;
+  font-size: 13px;
+}
+
+.btn-lg {
+  padding: 13px 28px;
+  font-size: 15px;
 }
 
 /* Loading spinner */
