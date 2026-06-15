@@ -1,5 +1,23 @@
 import "./App.css";
 import { useAuthAction } from "@authaction/web-sdk/react";
+import { useEffect, useState } from "react";
+
+function useHashPage() {
+  const [page, setPage] = useState(() =>
+    window.location.hash === "#claims" ? "claims" : "home"
+  );
+  useEffect(() => {
+    const onHashChange = () =>
+      setPage(window.location.hash === "#claims" ? "claims" : "home");
+    window.addEventListener("hashchange", onHashChange);
+    return () => window.removeEventListener("hashchange", onHashChange);
+  }, []);
+  return page;
+}
+
+function navigate(to) {
+  window.location.hash = to === "claims" ? "claims" : "";
+}
 
 function Navbar({ authenticated, onLogin, onSignup, onLogout }) {
   return (
@@ -30,24 +48,22 @@ function Navbar({ authenticated, onLogin, onSignup, onLogout }) {
 
 function HomePage({ onLogin, onSignup }) {
   return (
-    <div className="home-page">
-      <main className="hero">
-        <p className="hero-eyebrow">Identity &amp; Access Management</p>
-        <h1 className="hero-title">Authentication made simple</h1>
-        <p className="hero-subtitle">
-          Secure, fast, and developer-friendly OAuth2 authentication for your
-          applications.
-        </p>
-        <div className="hero-actions">
-          <button className="btn btn-primary btn-lg" onClick={onSignup}>
-            Get started free
-          </button>
-          <button className="btn btn-outline btn-lg" onClick={onLogin}>
-            Log in
-          </button>
-        </div>
-      </main>
-    </div>
+    <main className="hero">
+      <p className="hero-eyebrow">Identity &amp; Access Management</p>
+      <h1 className="hero-title">Authentication made simple</h1>
+      <p className="hero-subtitle">
+        Secure, fast, and developer-friendly OAuth2 authentication for your
+        applications.
+      </p>
+      <div className="hero-actions">
+        <button className="btn btn-primary btn-lg" onClick={onSignup}>
+          Get started free
+        </button>
+        <button className="btn btn-outline btn-lg" onClick={onLogin}>
+          Log in
+        </button>
+      </div>
+    </main>
   );
 }
 
@@ -74,6 +90,13 @@ function LoadingScreen() {
 export default function App() {
   const { isAuthenticated, isLoading, user, loginWithRedirect, logout } =
     useAuthAction();
+  const page = useHashPage();
+
+  useEffect(() => {
+    if (isLoading) return;
+    if (isAuthenticated && page !== "claims") navigate("claims");
+    if (!isAuthenticated && page === "claims") navigate("home");
+  }, [isAuthenticated, isLoading, page]);
 
   if (isLoading) return <LoadingScreen />;
 
